@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% load thumbnail %}
+{% block title %}Home Page{% endblock  %}
+
+{%block body%} 
+    <div class="row">
+        {%for post in posts%}
+            <div class="col col-sm-6 col-md-4 g-5">
+                <div class="card shadow my-4" style="width: 18rem;">
+                    {% thumbnail post.image "200x200" crop="center" as im %}
+                        <img src="{{ im.url }}" class="card-img-top" alt="Post Image">
+                    {% endthumbnail %}
+                    <div class="card-body">
+                        <p class="card-text">{{ post.text }}</p>
+                        <a href="{% url 'feed:detail' post.id%}" class="btn btn-primary">View Full Image</a>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+                <div class="col-sm-6 offset-3 text-center p-5 my-5 rounded-3 border border-light shadow bg-light-subtle">
+                    <h2>Welcome to Image Sharer!</h2>
+                    <p> Add your first image down below! </p>
+                    <a href="{% url 'feed:post' %}" class="btn btn-success"> Upload Images </a>
+                </div>
+        {% endfor %}
+    </div>
+{% endblock %}
